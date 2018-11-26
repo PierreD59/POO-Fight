@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 class Character
 {
-    private $id,
-            $name,
+    private $name,
             $damage;
 
 
@@ -32,32 +31,36 @@ class Character
     public function setId($id)
     {
         $id = (int) $id;
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
     public function setName(string $name)
     {
-        $this->_name = $name;
+        $this->name = $name;
         return $this;
     }
     public function setDamage($damage)
     {
         $damage = (int) $damage;
-        $this->_damage = $damage;
+        $this->damage = $damage;
         return $this;
     }
 
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
     public function getDamage()
     {
-        return $this->_damage;
+        return $this->damage;
     }
 
+    public function hitCharacter(Character $perso)
+    {
+        $perso->damage += 5;
+    }
 }

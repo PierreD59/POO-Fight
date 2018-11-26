@@ -37,23 +37,20 @@ class CharacterManager
         return $this;
     }
 
-    public function addCharacter()
+    public function addCharacter($test)
     {
-        $bdd = getData();
-        $bdd = $this->getDb()->prepare('INSERT INTO perso(id, name, damage) VALUES(:id, :name, :damage)');
+        $bdd = $this->getDb()->prepare('INSERT INTO perso(name, damage) VALUES(:name, :damage)');
 
-        $bdd->bindValue(':id', $perso->getId());
-        $bdd->bindValue(':name', $perso->getName(), PDO::PARAM_INT);
-        $bdd->bindValue(':damage', $perso->getDamage(), PDO::PARAM_INT);
+        $bdd->bindValue(':name', $test->getName(), PDO::PARAM_STR);
+        $bdd->bindValue(':damage', $test->getDamage(), PDO::PARAM_INT);
 
         $bdd->execute();
     }
 
-    public function deleteCharacter($perso) 
+    public function deleteCharacter() 
     {
-        if ($_damage = 100) 
+        if ($damage = 100) 
         {
-            $bdd = getData();
             $bdd = $this->getDb()->exec('DELETE FROM perso WHERE id = ' . $perso->id());
         }
     }
@@ -66,10 +63,20 @@ class CharacterManager
 
         foreach ($users as $user) 
         {
-            $arrayOfCharacter[] = new User($user);
+            $arrayOfCharacter[] = new Character($user);
         }
 
         return $arrayOfCharacter;
+    }
+
+    public function update(Character $perso)
+    {
+
+        $q = $this->_db->prepare('UPDATE perso SET damage = :damage WHERE id = :id');
+
+        $q->bindValue(':damage', $perso->hitCharacter(), PDO::PARAM_INT);
+        $q->execute();
+
     }
 
 }

@@ -4,14 +4,21 @@ require '../model/Database.php';
 require '../model/CharacterManager.php';
 
 $characterManager = new CharacterManager(Database::DB());
-$perso = $characterManager->getCharacter();
+$persos = $characterManager->getCharacter();
 
-$name = $_POST['name'];
-$damage = $_POST['damage'];
-
-
-if(isset($name) and !empty($name)) {
-    echo "Character create !";
+if(isset($_GET['start'])) 
+{
+    if($_GET['start'] == 'loading') 
+    {
+        $name = $_POST['name'];
+        if(isset($name) && !empty($name)) {
+            $test = new Character([
+                "name" => $name,
+                "damage" => 0
+                ]);
+            $characterManager->addCharacter($test);
+        }
+    }
 }
 
 
