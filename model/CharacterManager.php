@@ -49,10 +49,7 @@ class CharacterManager
 
     public function deleteCharacter() 
     {
-        if ($damage = 100) 
-        {
             $bdd = $this->getDb()->exec('DELETE FROM perso WHERE id = ' . $perso->id());
-        }
     }
 
     public function getCharacter()
@@ -68,13 +65,30 @@ class CharacterManager
 
         return $arrayOfCharacter;
     }
+    public function getCharacterById(int $id)
+    {
+        $characterId;
+
+        $query = $this->getDb()->prepare('SELECT * FROM perso WHERE id = :id');
+        $query->bindValue(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+
+        $takeCharacter = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($takeCharacter as $character) {
+            $characterId = new Character($character);
+        }
+
+        return $characterId;
+    }
 
     public function update(Character $perso)
     {
 
         $q = $this->_db->prepare('UPDATE perso SET damage = :damage WHERE id = :id');
 
-        $q->bindValue(':damage', $perso->hitCharacter(), PDO::PARAM_INT);
+        $q->bindValue(':id', $perso->getId(), PDO::PARAM_INT);
+        $q->bindValue(':damage', $perso->getDamage(), PDO::PARAM_INT);
         $q->execute();
 
     }

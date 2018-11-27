@@ -16,7 +16,7 @@
 
     <div class="bg-dark m-5 p-5 text-light">
         <p>Name = <?= $perso->getName(); ?></p>
-        <a href="?hitCharacter=<?php $perso->getId() ?>"><p>Damage = <?= $perso-> getDamage(); ?></p></a>
+        <a href="CombatController.php?id=<?php $perso->getId(); ?>"><p>Damage = <?= $perso-> getDamage(); ?></p></a>
     </div>
 
 <?php } ?>

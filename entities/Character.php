@@ -3,7 +3,8 @@ declare(strict_types = 1);
 
 class Character
 {
-    private $name,
+    private $id,
+            $name,
             $damage;
 
 
@@ -59,8 +60,10 @@ class Character
         return $this->damage;
     }
 
-    public function hitCharacter(Character $perso)
+    public function hitCharacter()
     {
-        $perso->damage += 5;
+        $hit = $this->getDamage();
+        $hit = $hit + 5;
+        $this->setDamage($hit);
     }
 }
